@@ -1,0 +1,45 @@
+
+--=============
+\set dataBase db_amd
+;
+\set userName postgres
+;
+\connect :dataBase :userName
+;
+--==========================
+--==========================
+
+
+--==============================
+-- drop constraints
+--==============================
+
+ALTER TABLE APPOINTMENT
+DROP CONSTRAINT fk1_APPOINTMENT
+;
+
+ALTER TABLE APPOINTMENT
+DROP CONSTRAINT fk2_APPOINTMENT
+;
+
+ALTER TABLE EVALUATION
+DROP CONSTRAINT fk1_EVALUATION
+;
+
+ALTER TABLE EVALUATION
+DROP CONSTRAINT fk2_EVALUATION
+;
+
+
+--==============================
+-- drop tables
+--==============================
+
+DROP TABLE IF EXISTS DOCTOR CASCADE;
+DROP TABLE IF EXISTS PATIENT CASCADE;
+DROP TABLE IF EXISTS DISEASE;
+DROP TABLE IF EXISTS APPOINTMENT;
+DROP TABLE IF EXISTS EVALUATION;
+
+
+

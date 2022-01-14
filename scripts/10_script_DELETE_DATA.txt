@@ -1,0 +1,20 @@
+
+--=============
+\set dataBase db_amd
+;
+\set userName postgres
+;
+\connect :dataBase :userName
+;
+--==========================
+--==========================
+
+
+--===============
+-- drop data
+--===============
+DELETE FROM DOCTOR;
+DELETE FROM PATIENT;
+DELETE FROM EVALUATION;
+DELETE FROM APPOINTMENT;
+DELETE FROM DISEASE;

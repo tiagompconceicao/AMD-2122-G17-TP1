@@ -1,0 +1,34 @@
+--==============
+-- DB connection
+--==============
+\set dataBase db_amd
+;
+\set userName postgres
+;
+\connect :dataBase :userName
+;
+--==========================
+--==========================
+
+
+
+--==========================
+-- [PRS: ADAPT]
+-- the file path where to write the data
+\set filePath 'dataset.tab'
+--==========================
+
+
+--==============================
+-- export to text data file
+--==============================
+-- the COPY SQL statement executes wihin server context and thus uses postgreSQL user's credentials
+-- very important: "\o" psdql statement redirects the STDOUT into a file path - this way it uses client credentials intead of server credentials
+\o :filePath
+
+
+
+\COPY (SELECT * FROM v1_dataset) TO STDOUT WITH DELIMITER '	' CSV HEADER;
+
+
+

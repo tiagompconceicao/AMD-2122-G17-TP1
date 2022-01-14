@@ -1,0 +1,76 @@
+
+--==============
+-- DB connection
+--==============
+\set dataBase db_amd
+;
+\set userName postgres
+;
+\connect :dataBase :userName
+;
+--==========================
+--==========================
+
+
+
+---------------------------------
+DELETE FROM DOCTOR;
+DELETE FROM PATIENT;
+DELETE FROM INFO;
+DELETE FROM APPOINTMENT;
+DELETE FROM DISEASE;
+---------------------------------
+
+
+
+-- DOCTOR
+INSERT INTO DOCTOR(name)
+VALUES 
+('JOSE FERREIRA'),
+('ANA MATOS')
+;
+
+
+-- PATIENT
+INSERT INTO PATIENT(name, birth_date)
+VALUES 
+('PEDRO LOPES', '1995-09-08' ),
+('MARIA SANTOS', '1975-05-05' ),
+('JOAO CARDOSO', '1980-02-28' ),
+('ANA ALVES', '1990-11-12')
+;
+
+
+
+-- DISEASE
+INSERT INTO DISEASE(name)
+VALUES 
+( 'myopia' ),
+( 'hypermetropia' ),
+( 'astigmatism' )
+;
+
+
+
+-- APPOINTMENT
+INSERT INTO APPOINTMENT(doctor, patient, date, tear_rate, lenses)
+VALUES
+( 1, 1, '2021-01-31', 0.5, 'hard'),
+( 1, 2, '2021-02-01', 0.5, 'soft'),
+( 2, 3, '2021-01-31', 0.5, 'none' ),
+( 2, 4, '2021-02-01', 0.5, 'none' )
+;
+
+-- EVALUATION
+INSERT INTO EVALUATION(disease, appointment, rate)
+VALUES
+(1, 1, 'light'),
+(3, 1, 'moderate'),
+(1, 2, 'light'),
+(2, 3, 'light'),
+(3, 3, 'high'),
+(2, 4, 'light')
+;
+
+
+

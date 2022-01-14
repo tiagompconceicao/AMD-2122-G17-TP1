@@ -1,0 +1,63 @@
+
+--=============
+-- Ligação à BD
+--=============
+\set dataBase db_amd
+;
+\set userName postgres
+;
+\connect :dataBase :userName
+;
+--==========================
+--==========================
+
+---------------------------------
+DROP VIEW IF EXISTS v1_dataset;
+DROP VIEW IF EXISTS v1_data;
+DROP VIEW IF EXISTS v1;
+DROP VIEW IF EXISTS v1_domain;
+DROP VIEW IF EXISTS v1_class;
+---------------------------------
+
+
+CREATE VIEW v1 (birth_date, prescription, astigmatic, tear_rate, lenses) AS
+SELECT p.birth_date, 
+(CASE WHEN d.name NOT LIKE 'astigmatism' THEN d.name else NULL END) as prescription,
+(CASE WHEN d.name = 'astigmatism' THEN d.name else NULL END) as astigmatic, 
+a.tear_rate,
+a.lenses
+FROM appointment as a join evaluation as e on (a.id = e.appointment)
+join patient as p on (a.patient = p.id)
+join disease as d on (e.disease = d.id)
+;
+
+
+CREATE VIEW v1_data(age, prescription, astigmatic, tear_rate, lenses) AS
+SELECT
+	(CASE WHEN date_part('year', now()) - extract(year from birth_Date) < 28 THEN 'young'
+	      WHEN date_part('year', now()) - extract(year from birth_Date) BETWEEN 28 AND 38 THEN 'pre-presbyopic'
+	 	  else 'presbyopic' END) as age,
+    MAX(prescription) AS presciption,
+    (CASE WHEN MAX(astigmatic) LIKE 'astigmatism' THEN 'yes' else 'no' END) as astigmatic,
+    (CASE WHEN tear_rate < 0.75 THEN 'reduced' else 'normal' END) as astigmatic,
+    lenses
+FROM
+    v1
+GROUP BY
+    birth_date,tear_rate,lenses;
+
+
+CREATE VIEW v1_domain(age, prescription, astigmatic, tear_rate, lenses) as
+SELECT 'discrete','discrete','discrete','discrete','discrete';
+
+CREATE VIEW v1_class(age, prescription, astigmatic, tear_rate, lenses) AS
+SELECT NULL,NULL,NULL,NULL,'class';
+
+CREATE VIEW v1_dataset(age, prescription, astigmatic, tear_rate, lenses) AS
+SELECT age, prescription, astigmatic, tear_rate, lenses FROM v1_domain 
+UNION ALL 
+SELECT age, prescription, astigmatic, tear_rate, lenses FROM v1_class
+UNION ALL
+SELECT age, prescription, astigmatic, tear_rate, lenses FROM v1_data;
+
+

@@ -1,0 +1,142 @@
+
+--==============
+-- DB connection
+--==============
+\set dataBase db_amd
+;
+\set userName postgres
+;
+\connect :dataBase :userName
+;
+--==========================
+--==========================
+
+-------------------------------
+-- create the relational schema
+-------------------------------
+DROP TABLE IF EXISTS DOCTOR;
+DROP TABLE IF EXISTS PATIENT;
+DROP TABLE IF EXISTS DISEASE;
+DROP TABLE IF EXISTS APPOINTMENT;
+DROP TABLE IF EXISTS EVALUATION;
+--------------------------------
+
+
+CREATE TABLE DOCTOR (
+    id SERIAL NOT NULL,
+    name VARCHAR(50) NOT NULL
+);
+
+
+CREATE TABLE PATIENT (
+    id SERIAL NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    birth_date DATE NOT NULL
+);
+
+
+CREATE TABLE APPOINTMENT (
+    id SERIAL NOT NULL,
+    date DATE NOT NULL,
+    tear_rate REAL NOT NULL,
+    lenses varchar(4) NOT NULL
+);
+
+
+CREATE TABLE DISEASE (
+    id SERIAL NOT NULL,
+    name VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE EVALUATION(
+    disease INT NOT NULL,
+    appointment INT NOT NULL,
+    rate varchar(10) NOT NULL
+);
+
+
+----------------------------
+-- relationship attributes
+----------------------------
+
+-- APPOINTMENT -> PATIENT
+ALTER TABLE APPOINTMENT
+ADD patient INT
+;
+
+-- APPOINTMENT -> DOCTOR
+ALTER TABLE APPOINTMENT
+ADD doctor INT
+;
+
+
+-------------------------------
+-- entity integrity constraints
+-- (primary key and unique)
+-------------------------------
+
+ALTER TABLE PATIENT
+ADD CONSTRAINT pk_PATIENT
+    PRIMARY KEY( id )
+;
+
+
+ALTER TABLE DOCTOR
+ADD CONSTRAINT pk_DOCTOR
+    PRIMARY KEY( id )
+;
+
+ALTER TABLE DISEASE
+ADD CONSTRAINT pk_DISEASE
+    PRIMARY KEY( id )
+;
+
+ALTER TABLE APPOINTMENT
+ADD CONSTRAINT pk_APPOINTMENT
+    PRIMARY KEY( id )
+;
+
+ALTER TABLE EVALUATION
+ADD CONSTRAINT pk_EVALUATION
+    PRIMARY KEY( disease, appointment)
+;
+
+ALTER TABLE EVALUATION
+ADD CONSTRAINT check_rate
+    CHECK(rate IN('light','moderate','high'))
+;
+
+ALTER TABLE APPOINTMENT
+ADD CONSTRAINT check_lenses
+    CHECK(lenses IN('none','soft','hard'))
+;
+
+
+----------------------------------------
+-- referential integrity constraints
+-- (foreign key)
+----------------------------------------
+
+ALTER TABLE APPOINTMENT
+ADD CONSTRAINT fk1_APPOINTMENT
+    FOREIGN KEY( doctor )
+    REFERENCES DOCTOR( id )
+;
+
+ALTER TABLE APPOINTMENT
+ADD CONSTRAINT fk2_APPOINTMENT
+    FOREIGN KEY( patient )
+    REFERENCES PATIENT( id )
+;
+
+ALTER TABLE EVALUATION
+ADD CONSTRAINT fk1_EVALUATION
+    FOREIGN KEY(disease)
+    REFERENCES DISEASE( id )
+;
+
+ALTER TABLE EVALUATION
+ADD CONSTRAINT fk2_EVALUATION
+    FOREIGN KEY(appointment)
+    REFERENCES APPOINTMENT( id )
+;

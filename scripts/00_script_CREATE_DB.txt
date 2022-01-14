@@ -1,0 +1,24 @@
+
+--------
+-- DB name
+----------
+\set dataBase db_amd
+;
+
+-----------------------
+-- Remode and Create DB
+-----------------------
+
+\echo "Remove Data Base" :dataBase
+;
+
+DROP DATABASE IF EXISTS :dataBase
+;
+
+
+\echo "Create Data Base" :dataBase
+;
+
+
+CREATE DATABASE :dataBase
+;
