@@ -1,8 +1,8 @@
 ## Directory organization:
- /dataset -> directory with the datasets
- /scripts -> directory with the sql source code and the database scripts
- /src -> directory with the python source code
- /orange_workflows -> directory with orange workflow files
+ /dataset -> directory with the datasets  
+ /scripts -> directory with the sql source code and the database scripts  
+ /src -> directory with the python source code  
+ /orange_workflows -> directory with orange workflow files  
 
 ### Steps to run a solution:
 - Open the command prompt in the directory "src"
