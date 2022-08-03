@@ -10,9 +10,9 @@
 
 Important note: 'X' is to be replaced with "ID3", "NB" or "1R", each script will run a solution with a different classifier.
 
-> ID3Main.py: uses ID3 classifier
-> NBMain.py : uses Naive-Bayes classifier
-> 1RMain.py : uses One-Rule classifier
+> ID3Main.py: uses ID3 classifier  
+> NBMain.py : uses Naive-Bayes classifier  
+> 1RMain.py : uses One-Rule classifier  
 
 
 ### Steps to run the script that evaluate the 3 classifiers:
