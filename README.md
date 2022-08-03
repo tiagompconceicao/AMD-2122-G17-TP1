@@ -1,12 +1,16 @@
 Directory organization:
  /dataset -> directory with the datasets
+ 
  /scripts -> directory with the sql source code and the database scripts
+ 
  /src -> directory with the python source code
+ 
  /orange_workflows -> directory with orange workflow files
 
 Steps to run a solution:
 
 -> Open the command prompt in the directory "src"
+
 -> Execute the command "python XMain.py"
 
 Important note: 'X' is to be replaced with "ID3", "NB" or "1R", each script will run a solution with a different classifier.
